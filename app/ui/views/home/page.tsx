@@ -1,11 +1,12 @@
 import React from "react";
-import { Navbar } from "../../components/navbar/page";
+import { Navbar, Footer } from "../../components/index";
 
 export const Home = () => {
   return (
     <div>
       <Navbar />
-      <h1>home</h1>
+      <h1 className="col-6">home</h1>
+      <Footer />
     </div>
   );
 };
