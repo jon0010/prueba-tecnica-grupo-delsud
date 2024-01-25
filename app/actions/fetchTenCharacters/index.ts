@@ -1,9 +1,11 @@
 import axios from "axios";
+import dotenv from "dotenv";
+dotenv.config();
 
 export const fetchTenCharacters = async () => {
   try {
     const response = await axios.get(
-      "https://gateway.marvel.com/v1/public/characters?apikey=89819eb019b102a4d034d7b6261de194&hash=c1694ba4805af43d3c2362001b73eac5&ts=1&limit=10"
+      `${process.env.MARVEL_BASE_URL}/v1/public/characters?apikey=${process.env.MARVEL_PUBLIC_KEY}&hash=${process.env.HASH}&ts=${process.env.TS}&limit=10`
     );
 
     const characters = response.data.data.results;

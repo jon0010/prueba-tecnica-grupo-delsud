@@ -4,6 +4,7 @@ import { fetchTenCharacters } from "../../../actions/fetchTenCharacters/index";
 import { ICharacter } from "@/app/interfaces";
 import styles from "./card.module.css";
 import { RiStarLine } from "react-icons/ri";
+import { Pagination } from "../index";
 
 export const CardCharacter: React.FC = () => {
   const [characters, setCharacters] = useState<ICharacter[]>([]);
@@ -54,6 +55,10 @@ export const CardCharacter: React.FC = () => {
             </div>
           </div>
         ))}
+      </div>
+      <div className="mt-3">
+        {" "}
+        <Pagination />
       </div>
     </div>
   );
