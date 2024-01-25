@@ -1,30 +1,60 @@
-import React from "react";
-import Image from "next/image";
+"use client";
+import React, { useState, useEffect } from "react";
+import { fetchTenCharacters } from "../../../actions/fetchTenCharacters/index";
 import { ICharacter } from "@/app/interfaces";
+import styles from "./card.module.css";
+import { RiStarLine } from "react-icons/ri";
 
-export const CardCharacter = async () => {
-  const res = await fetch(
-    "https://gateway.marvel.com/v1/public/characters?apikey=89819eb019b102a4d034d7b6261de194&hash=c1694ba4805af43d3c2362001b73eac5&ts=1&limit=10"
-  );
-  const json = await res.json();
-  const data = json.data;
-  const characters = data.results;
-  console.log({ characters });
+export const CardCharacter: React.FC = () => {
+  const [characters, setCharacters] = useState<ICharacter[]>([]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const result = await fetchTenCharacters();
+        if (result.characters) {
+          setCharacters(result.characters);
+        } else {
+          console.error("Error fetching data:", result.error);
+        }
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    };
+    fetchData();
+  }, []);
 
   return (
-    <div>
-      {characters.map((character: ICharacter, index: number) => (
-        <div key={index}>
-          <p>ID: {character.id}</p>
-          <p>Name: {character.name}</p>
-          <Image
-            src={`${character.thumbnail.path}.${character.thumbnail.extension}`}
-            alt={character.name}
-            width={120}
-            height={120}
-          />
-        </div>
-      ))}
+    <div className="container-fluid">
+      <div className={`row justify-content-center ${styles["card-row"]}`}>
+        {characters.map((character, index) => (
+          <div
+            className={`col-12 col-sm-6 col-md-4 col-lg-2 mx-1 row justify-content-evenly px-3 ${styles["card-wrapper"]}`}
+            key={index}
+          >
+            <div
+              className={`card mt-3 ${styles.card}`}
+              style={{
+                backgroundImage: `url('${character.thumbnail.path}.${character.thumbnail.extension}')`,
+                backgroundRepeat: "no-repeat",
+                backgroundSize: "cover",
+              }}
+            >
+              <div className="d-flex flex-row-reverse">
+                <RiStarLine className="fs-2 text-warning" />
+              </div>
+              <div className={`card-text ${styles["card-text"]}`}>
+                <p
+                  className="d-flex justify-content-start ms-2"
+                  style={{ textShadow: "2px 2px 2px rgba(0, 0, 0, 1)" }}
+                >
+                  {character.name}
+                </p>
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
     </div>
   );
 };
