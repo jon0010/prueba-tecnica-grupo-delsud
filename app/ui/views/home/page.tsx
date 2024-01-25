@@ -1,11 +1,11 @@
 import React from "react";
-import { Navbar, Footer } from "../../components/index";
+import { Navbar, Footer, CardCharacter } from "../../components/index";
 
-export const Home = () => {
+export const Home = async () => {
   return (
     <div>
       <Navbar />
-      <h1 className="col-6">home</h1>
+      <CardCharacter />
       <Footer />
     </div>
   );
