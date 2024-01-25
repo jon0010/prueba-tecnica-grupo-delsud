@@ -12,21 +12,10 @@ export function Links() {
             src={marvel}
             className="navbar-brand"
             alt="logo"
-            width={110}
-            height={50}
+            width={undefined}
+            style={{ width: "6em", height: "3em" }}
           ></Image>
         </NavLink>
-        <button
-          className="navbar-toggler"
-          type="button"
-          data-bs-toggle="collapse"
-          data-bs-target="#navbarNav"
-          aria-controls="navbarNav"
-          aria-expanded="false"
-          aria-label="Toggle navigation"
-        >
-          <span className="navbar-toggler-icon"></span>
-        </button>
         <div
           className="collapse navbar-collapse justify-content-start ms-3"
           id="navbarNav"

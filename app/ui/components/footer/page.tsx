@@ -40,9 +40,8 @@ export const Footer = () => {
         <Image
           src={delsud}
           alt="Copyright Logo"
-          style={{ width: "60px", marginRight: "5px" }}
-          width={50}
-          height={40}
+          width={undefined}
+          style={{ width: "6em", marginRight: "5px", height: "3em" }}
         ></Image>
         <span className="fw-semibold">
           &copy; {currentYear} Grupo delsud | prueba tecnica marvel app

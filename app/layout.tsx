@@ -17,7 +17,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${montserrat.className} antialised`}>{children}</body>
+      <body className={`${montserrat.className} antialised fw-semibold`}>
+        {children}
+      </body>
     </html>
   );
 }
