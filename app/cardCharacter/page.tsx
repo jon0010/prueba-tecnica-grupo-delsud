@@ -1,17 +1,20 @@
 "use client";
 import React, { useState, useEffect } from "react";
 import fetchFiftyCharacters from "../actions/fetchFiftyCharacters/index";
-import { ICharacter } from "@/app/interfaces";
-import styles from "./card.module.css";
+import fetchCharacterDetails from "../actions/fetchCaracterDetails";
+import { ICharacter, ICharacterDetail } from "@/app/interfaces";
 import { RiStarLine } from "react-icons/ri";
 import Pagination from "../pagination/page";
-import { useRouter } from "next/navigation";
+import CharacterModal from "../characterDetailModal/characterModal";
+import styles from "../cardCharacter/card.module.css"
 
 const CardCharacter: React.FC = () => {
-  const router = useRouter();
   const [characters, setCharacters] = useState<ICharacter[]>([]);
-  const cardsPerPage = 8;
   const [currentPage, setCurrentPage] = useState(1);
+  const cardsPerPage = 8;
+  const [selectedCharacter, setSelectedCharacter] =
+    useState<ICharacterDetail | null>(null);
+  const [showModal, setShowModal] = useState(false);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -29,6 +32,8 @@ const CardCharacter: React.FC = () => {
     fetchData();
   }, []);
 
+  console.log({ characters });
+
   const indexOfLastCard = currentPage * cardsPerPage;
   const indexOfFirstCard = indexOfLastCard - cardsPerPage;
   const currentCards = characters.slice(indexOfFirstCard, indexOfLastCard);
@@ -36,7 +41,26 @@ const CardCharacter: React.FC = () => {
   const paginate = (pageNumber: number) => setCurrentPage(pageNumber);
 
   const handleConsoleLog = () => {
-    return console.log("aaaaaaaaaaaaaaaa");
+    console.log("aaaaaaaaaaaaaaaa");
+  };
+
+  const handleCardClick = async (character: ICharacter) => {
+    try {
+      const result = await fetchCharacterDetails(character.id.toString());
+      if (result) {
+        setSelectedCharacter(result);
+        setShowModal(true);
+      } else {
+        console.error("Error fetching character details:", console.error);
+      }
+    } catch (error) {
+      console.error("Error fetching character details:", error);
+    }
+  };
+
+  const handleCloseModal = () => {
+    setShowModal(false);
+    setSelectedCharacter(null);
   };
 
   return (
@@ -48,8 +72,8 @@ const CardCharacter: React.FC = () => {
             <div
               key={index}
               className={`col-12 col-sm-6 col-md-3 col-lg-3 ${styles["card-wrapper"]} ${styles["custom-breakpoint-class"]}`}
-              onClick={() => router.push(`cardCharacter/${character.id}`)}
               style={{ cursor: "pointer" }}
+              onClick={() => handleCardClick(character)}
             >
               <div
                 className={`card mt-4 d-flex flex-row-reverse flex-wrap align-content-start justify-content-start align-items-center ${styles.card} ${styles["custom-animation-class"]}`}
@@ -92,6 +116,13 @@ const CardCharacter: React.FC = () => {
         </div>
       </div>
       <div className="col-2 col-sm-0 d-none d-sm-block"></div>
+
+      {showModal && selectedCharacter && (
+        <CharacterModal
+          characterDetails={selectedCharacter}
+          onClose={handleCloseModal}
+        />
+      )}
     </div>
   );
 };

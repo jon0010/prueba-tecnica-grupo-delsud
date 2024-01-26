@@ -1,5 +1,7 @@
+import { ICharacter } from "..";
+
 export interface IComicDetail {
-  id: string;
+  id: number;
   title: string;
   description: string;
   thumbnail: {
@@ -9,8 +11,8 @@ export interface IComicDetail {
   resourceURI: string;
 }
 
-export interface ICharacterDetail {
-  id: string;
+export interface ICharacterDetail extends ICharacter {
+  id: number;
   name: string;
   description: string;
   thumbnail: {
