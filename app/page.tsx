@@ -1,5 +1,5 @@
 import React from "react";
-import { Home } from "./ui/views/home/page";
+import Home from "./home/page";
 
 const App = () => {
   return (

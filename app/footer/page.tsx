@@ -1,10 +1,10 @@
 "use client";
 import React, { useState, useEffect } from "react";
 import Image from "next/image";
-import delsud from "../../../assets/delsud.jpg";
+import delsud from "../assets/delsud.jpg";
 import { BsHandIndexFill } from "react-icons/bs";
 
-export const Footer = () => {
+const Footer = () => {
   const currentYear = new Date().getFullYear();
   const [showButton, setShowButton] = useState(false);
 
@@ -59,3 +59,5 @@ export const Footer = () => {
     </div>
   );
 };
+
+export default Footer;
