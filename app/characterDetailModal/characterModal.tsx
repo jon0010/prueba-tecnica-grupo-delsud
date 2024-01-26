@@ -3,6 +3,7 @@ import Image from "next/image";
 import { ICharacterDetail } from "../interfaces/index";
 import { Bangers } from "next/font/google";
 import styles from "../cardCharacter/card.module.css";
+import { useRouter } from "next/navigation";
 
 interface CharacterModalProps {
   characterDetails: ICharacterDetail;
@@ -15,6 +16,7 @@ const CharacterModal: React.FC<CharacterModalProps> = ({
   characterDetails,
   onClose,
 }) => {
+  const router = useRouter();
   return (
     <dialog
       className="modal fade show"
@@ -81,6 +83,7 @@ const CharacterModal: React.FC<CharacterModalProps> = ({
                     <div
                       className="row mb-5 border border-4 p-3 me-2 rounded"
                       style={{ cursor: "pointer" }}
+                      onClick={() => router.push(`/characterDetailModal/${comic.id}`)}
                     >
                       <div className="col-3">
                         {" "}
@@ -95,7 +98,7 @@ const CharacterModal: React.FC<CharacterModalProps> = ({
                       <div className="col-8">
                         {" "}
                         <li className="mt-5 d-flex justify-content-start">
-                          {comic.title}
+                          {comic.title} (ID: {comic.id})
                         </li>
                       </div>
                     </div>
