@@ -65,6 +65,11 @@
   font-size: 4em;
 }
 
+.titleComicDetail {
+  text-shadow: 2px 2px 4px #000000;
+  font-size: 4em;
+}
+
 .imagedetail {
   border-radius: 6px;
   margin-bottom: 15px;
