@@ -43,15 +43,15 @@
   background: linear-gradient(
     45deg,
     #4f0000,
-    #c62727,
+    #ff0000,
     #4f0000,
     #303030,
     #000000,
-    #b64343,
+    #d01a1a,
     #303030,
-    #b64343,
+    #ff0000,
     #303030,
-    #b64343
+    #ff0000
   );
   background-size: 400%;
   width: calc(100% + 4px);
