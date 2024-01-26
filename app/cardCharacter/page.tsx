@@ -1,12 +1,14 @@
 "use client";
 import React, { useState, useEffect } from "react";
-import { fetchTenCharacters } from "../../../actions/fetchTenCharacters/index";
+import fetchFiftyCharacters from "../actions/fetchFiftyCharacters/index";
 import { ICharacter } from "@/app/interfaces";
 import styles from "./card.module.css";
 import { RiStarLine } from "react-icons/ri";
-import { Pagination } from "../../components/pagination/page";
+import Pagination from "../pagination/page";
+import { useRouter } from "next/navigation";
 
-export const CardCharacter: React.FC = () => {
+const CardCharacter: React.FC = () => {
+  const router = useRouter();
   const [characters, setCharacters] = useState<ICharacter[]>([]);
   const cardsPerPage = 8;
   const [currentPage, setCurrentPage] = useState(1);
@@ -14,7 +16,7 @@ export const CardCharacter: React.FC = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const result = await fetchTenCharacters();
+        const result = await fetchFiftyCharacters();
         if (result.characters) {
           setCharacters(result.characters);
         } else {
@@ -33,6 +35,10 @@ export const CardCharacter: React.FC = () => {
 
   const paginate = (pageNumber: number) => setCurrentPage(pageNumber);
 
+  const handleConsoleLog = () => {
+    return console.log("aaaaaaaaaaaaaaaa");
+  };
+
   return (
     <div className="row px-0">
       <div className="col-2 col-sm-0 d-none d-sm-block"></div>
@@ -42,6 +48,8 @@ export const CardCharacter: React.FC = () => {
             <div
               key={index}
               className={`col-12 col-sm-6 col-md-3 col-lg-3 ${styles["card-wrapper"]} ${styles["custom-breakpoint-class"]}`}
+              onClick={() => router.push(`cardCharacter/${character.id}`)}
+              style={{ cursor: "pointer" }}
             >
               <div
                 className={`card mt-4 d-flex flex-row-reverse flex-wrap align-content-start justify-content-start align-items-center ${styles.card} ${styles["custom-animation-class"]}`}
@@ -49,10 +57,14 @@ export const CardCharacter: React.FC = () => {
                   backgroundImage: `url('${character.thumbnail.path}.${character.thumbnail.extension}')`,
                   backgroundRepeat: "no-repeat",
                   backgroundSize: "cover",
+                  cursor: "pointer",
                 }}
               >
                 <div className="">
-                  <RiStarLine className="fs-1 mt-2 text-warning" />
+                  <RiStarLine
+                    onClick={() => handleConsoleLog()}
+                    className="fs-2 mt-2 text-white-50"
+                  />
                 </div>
                 <div className={`card-text ${styles["card-text"]}`}>
                   <p
@@ -83,3 +95,5 @@ export const CardCharacter: React.FC = () => {
     </div>
   );
 };
+
+export default CardCharacter;

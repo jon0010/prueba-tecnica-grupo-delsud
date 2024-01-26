@@ -2,10 +2,10 @@ import React from "react";
 import Link from "next/link";
 import { IPaginationProps } from "@/app/interfaces";
 
-export const Pagination: React.FC<IPaginationProps> = ({
+const Pagination: React.FC<IPaginationProps> = ({
   cardsPerPage,
   totalCards,
-  currentPage, // Modificado para recibir la página actual como prop
+  currentPage,
   paginate,
 }) => {
   const pageNumbers = Math.ceil(totalCards / cardsPerPage);
@@ -59,3 +59,5 @@ export const Pagination: React.FC<IPaginationProps> = ({
     </nav>
   );
 };
+
+export default Pagination;

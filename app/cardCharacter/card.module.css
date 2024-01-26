@@ -14,11 +14,10 @@
   gap: 10px;
   padding: 0px 15px;
   background-color: red;
-  border-radius: 10px;
+  border-radius: 6px;
   border: none;
   color: white;
   position: relative;
-  cursor: pointer;
   font-weight: 900;
   transition-duration: 0.2s;
 }
@@ -43,22 +42,40 @@
   border-radius: 10px;
   background: linear-gradient(
     45deg,
-    #6b25b6,
-    #0000ff,
-    #00ff00,
-    #ffff00,
-    #ff0000,
-    #ab00fb,
-    #0000ff,
-    #00bbff,
-    #ffff00,
-    #e100ff
+    #4f0000,
+    #c62727,
+    #4f0000,
+    #303030,
+    #000000,
+    #b64343,
+    #303030,
+    #b64343,
+    #303030,
+    #b64343
   );
   background-size: 400%;
   width: calc(100% + 4px);
   height: calc(100% + 4px);
   z-index: -1;
   animation: steam 20s linear infinite;
+}
+
+.titleDetail {
+  text-shadow: 2px 2px 4px #000000;
+  font-size: 4em;
+}
+
+.imagedetail {
+  border-radius: 6px;
+  margin-bottom: 15px;
+}
+
+.custom-border {
+  border: 2px solid rgba(173, 216, 230, 0.5);
+  padding: 15px;
+  border-radius: 10px;
+  width: 100%;
+  background-color: rgba(127, 255, 212, 0.184);
 }
 
 @keyframes steam {
@@ -73,10 +90,6 @@
   100% {
     background-position: 0 0;
   }
-}
-
-.card:after {
-  filter: blur(7px);
 }
 
 @media (min-width: 900px) and (min-height: 900px) {

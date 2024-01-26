@@ -1,5 +1,5 @@
 import NavLink from "next/link";
-import marvel from "../../../assets/marvel.png";
+import marvel from "../assets/marvel.png";
 import { RiStarLine } from "react-icons/ri";
 import Image from "next/image";
 
@@ -25,7 +25,7 @@ export function Links() {
               <input
                 className="form-control"
                 type="search"
-                placeholder="🔍 Ingresá un heroe o comic"
+                placeholder="Ingresá un heroe o comic"
                 aria-label="Search"
               />
               <div className="input-group-append">
