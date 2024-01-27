@@ -1,18 +1,12 @@
 import axios from "axios";
 import { MARVEL_BASE_URL, MARVEL_PUBLIC_KEY, TS, HASH } from "@/app/lib/env";
+import { ICharacter } from "@/app/interfaces";
+import { IComicResult } from "@/app/interfaces/Comic";
 
-export interface IMarvelCharacter {
+export interface ISearchResult<T> {
   id: number;
-  name: string;
-  thumbnail: {
-    path: string;
-    extension: string;
-  };
-}
-
-export interface ISearchResult {
-  id: number;
-  name: string;
+  name?: string;
+  title?: string;
   thumbnail: {
     path: string;
     extension: string;
@@ -20,27 +14,55 @@ export interface ISearchResult {
 }
 
 const fetchCharacterOrComicByName = async (
-  searchTerm: string
-): Promise<{ characters: ISearchResult[] } | { error: string }> => {
+  searchTerm: string,
+  showingHeroes: boolean
+): Promise<
+  | {
+      characters?: ISearchResult<ICharacter>[];
+      comics?: ISearchResult<IComicResult>[];
+    }
+  | { error: string }
+> => {
   try {
-    const response = await axios.get(
-      `${MARVEL_BASE_URL.trim()}/characters?apikey=${MARVEL_PUBLIC_KEY.trim()}&hash=${HASH.trim()}&ts=${TS.trim()}&limit=100`
-    );
+    let results;
 
-    const characters: IMarvelCharacter[] = response.data.data.results;
+    if (showingHeroes) {
+      const charactersResponse = await axios.get(
+        `${MARVEL_BASE_URL.trim()}/characters?apikey=${MARVEL_PUBLIC_KEY.trim()}&hash=${HASH.trim()}&ts=${TS.trim()}&limit=100`
+      );
 
-    const filteredCharacters: ISearchResult[] = characters
-      .filter((character: IMarvelCharacter) =>
-        character.name.toLowerCase().includes(searchTerm.toLowerCase())
-      )
-      .sort((a, b) => a.name.localeCompare(b.name))
-      .map((character: IMarvelCharacter) => ({
-        id: character.id,
-        name: character.name,
-        thumbnail: character.thumbnail,
-      }));
+      const characters: ICharacter[] = charactersResponse.data.data.results;
 
-    return { characters: filteredCharacters };
+      results = characters
+        .filter((character: ICharacter) =>
+          character.name.toLowerCase().includes(searchTerm.toLowerCase())
+        )
+        .sort((a, b) => a.name.localeCompare(b.name))
+        .map((character: ICharacter) => ({
+          id: character.id,
+          name: character.name,
+          thumbnail: character.thumbnail,
+        }));
+    } else {
+      const comicsResponse = await axios.get(
+        `${MARVEL_BASE_URL.trim()}/comics?apikey=${MARVEL_PUBLIC_KEY.trim()}&hash=${HASH.trim()}&ts=${TS.trim()}&limit=100`
+      );
+
+      const comics: IComicResult[] = comicsResponse.data.data.results;
+
+      results = comics
+        .filter((comic: IComicResult) =>
+          comic.title.toLowerCase().includes(searchTerm.toLowerCase())
+        )
+        .sort((a, b) => a.title.localeCompare(b.title))
+        .map((comic: IComicResult) => ({
+          id: comic.id,
+          title: comic.title,
+          thumbnail: comic.thumbnail,
+        }));
+    }
+
+    return { [showingHeroes ? "characters" : "comics"]: results };
   } catch (error) {
     return { error: "Failed to fetch data" };
   }

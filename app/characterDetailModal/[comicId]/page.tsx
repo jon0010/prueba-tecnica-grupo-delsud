@@ -14,13 +14,12 @@ const bangers = Bangers({ subsets: ["latin"], weight: "400" });
 
 const ComicDetail = () => {
   const pathname = usePathname();
-  const comicId =
-    pathname.split("/").pop()?.toString() || "comic no disponible";
+  const comicId = pathname.split("/").pop() || "";
   const [comicDetails, setComicDetails] = useState<IComic | null>(null);
 
   useEffect(() => {
     const fetchData = async () => {
-      const result = await fetchComicById(comicId);
+      const result = await fetchComicById(parseInt(comicId, 10));
 
       if (result.comic) {
         setComicDetails(result.comic);

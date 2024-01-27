@@ -2,24 +2,38 @@ import React, { useState, ChangeEvent, FormEvent } from "react";
 
 interface SearchBarProps {
   onSearch: (searchTerm: string) => void;
-  onShowAll: () => void;
+  onShowComics: () => void;
+  onShowHeroes: () => void;
 }
 
-const SearchBar: React.FC<SearchBarProps> = ({ onSearch, onShowAll }) => {
+const SearchBar: React.FC<SearchBarProps> = ({
+  onSearch,
+  onShowComics,
+  onShowHeroes,
+}) => {
   const [searchTerm, setSearchTerm] = useState("");
+  const [showHeroes, setShowHeroes] = useState(true);
 
-  const handleSearchChange = (e: ChangeEvent<HTMLInputElement>) => {
+  const handleSearchTermChange = (e: ChangeEvent<HTMLInputElement>) => {
     setSearchTerm(e.target.value);
   };
 
   const handleSearchSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     onSearch(searchTerm);
+    setShowHeroes(true);
     setSearchTerm("");
   };
 
-  const handleShowAllClick = () => {
-    onShowAll();
+  const handleShowAllHeroes = () => {
+    setShowHeroes(true);
+    onShowHeroes();
+    setSearchTerm("");
+  };
+
+  const handleShowAllComics = () => {
+    setShowHeroes(false);
+    onShowComics();
     setSearchTerm("");
   };
 
@@ -31,12 +45,12 @@ const SearchBar: React.FC<SearchBarProps> = ({ onSearch, onShowAll }) => {
       >
         <div className="input-group">
           <input
-            className="form-control"
+            className="form-control ms-2"
             type="search"
             placeholder="search hero name / comic"
             aria-label="Search"
             value={searchTerm}
-            onChange={handleSearchChange}
+            onChange={handleSearchTermChange}
           />
           <div className="input-group-append">
             <button className="btn btn-outline-info ms-3" type="submit">
@@ -46,10 +60,20 @@ const SearchBar: React.FC<SearchBarProps> = ({ onSearch, onShowAll }) => {
         </div>
       </form>
       <button
-        className="btn btn-outline-info mt-3 fw-semibold"
-        onClick={handleShowAllClick}
+        className={`btn btn-outline-info mt-3 fw-semibold ms-2 ${
+          showHeroes ? "active" : ""
+        }`}
+        onClick={handleShowAllHeroes}
       >
-        Mostrar Todos
+        Mostrar Heroes
+      </button>
+      <button
+        className={`btn btn-outline-info mt-3 fw-semibold ms-2 ${
+          !showHeroes ? "active" : ""
+        }`}
+        onClick={handleShowAllComics}
+      >
+        Mostrar Comics
       </button>
     </div>
   );
