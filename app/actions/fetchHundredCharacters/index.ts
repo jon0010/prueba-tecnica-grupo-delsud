@@ -1,10 +1,10 @@
 import axios from "axios";
 import { MARVEL_BASE_URL, MARVEL_PUBLIC_KEY, TS, HASH } from "@/app/lib/env";
 
-const fetchFiftyCharacters = async () => {
+const fetchHundredCharacters = async () => {
   try {
     const response = await axios.get(
-      `${MARVEL_BASE_URL.trim()}/characters?apikey=${MARVEL_PUBLIC_KEY.trim()}&hash=${HASH.trim()}&ts=${TS.trim()}&limit=80`
+      `${MARVEL_BASE_URL.trim()}/characters?apikey=${MARVEL_PUBLIC_KEY.trim()}&hash=${HASH.trim()}&ts=${TS.trim()}&limit=100`
     );
     const characters = response.data.data.results;
     return { characters };
@@ -13,4 +13,4 @@ const fetchFiftyCharacters = async () => {
   }
 };
 
-export default fetchFiftyCharacters;
+export default fetchHundredCharacters;

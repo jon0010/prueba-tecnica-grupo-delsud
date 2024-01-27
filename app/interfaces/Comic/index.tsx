@@ -32,3 +32,12 @@ export interface IComic {
     text: string;
   }[];
 }
+
+export interface IComicResult {
+  id: number;
+  title: string;
+  thumbnail: {
+    path: string;
+    extension: string;
+  };
+}
