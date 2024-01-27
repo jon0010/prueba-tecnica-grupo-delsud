@@ -1,17 +1,7 @@
 import axios from "axios";
 import { MARVEL_BASE_URL, MARVEL_PUBLIC_KEY, TS, HASH } from "@/app/lib/env";
-import { ICharacter } from "@/app/interfaces";
+import { ICharacter, ISearchResult } from "@/app/interfaces/index";
 import { IComicResult } from "@/app/interfaces/Comic";
-
-export interface ISearchResult<T> {
-  id: number;
-  name?: string;
-  title?: string;
-  thumbnail: {
-    path: string;
-    extension: string;
-  };
-}
 
 const fetchCharacterOrComicByName = async (
   searchTerm: string,

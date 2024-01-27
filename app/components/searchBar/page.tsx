@@ -1,12 +1,7 @@
 import React, { useState, ChangeEvent, FormEvent } from "react";
+import { ISearchBarProps } from "../../interfaces";
 
-interface SearchBarProps {
-  onSearch: (searchTerm: string) => void;
-  onShowComics: () => void;
-  onShowHeroes: () => void;
-}
-
-const SearchBar: React.FC<SearchBarProps> = ({
+const SearchBar: React.FC<ISearchBarProps> = ({
   onSearch,
   onShowComics,
   onShowHeroes,
@@ -37,6 +32,8 @@ const SearchBar: React.FC<SearchBarProps> = ({
     setSearchTerm("");
   };
 
+  const placeholderText = showHeroes ? "Search hero" : "Search comic";
+
   return (
     <div className="justify-content-start">
       <form
@@ -47,7 +44,7 @@ const SearchBar: React.FC<SearchBarProps> = ({
           <input
             className="form-control ms-2"
             type="search"
-            placeholder="search hero name / comic"
+            placeholder={placeholderText}
             aria-label="Search"
             value={searchTerm}
             onChange={handleSearchTermChange}

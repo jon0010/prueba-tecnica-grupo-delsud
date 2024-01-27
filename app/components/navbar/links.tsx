@@ -1,7 +1,7 @@
 "use client";
 import { useRouter } from "next/navigation";
 import NavLink from "next/link";
-import marvel from "../assets/marvel.png";
+import marvel from "../../assets/marvel.png";
 import { RiStarLine } from "react-icons/ri";
 import Image from "next/image";
 
