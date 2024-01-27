@@ -4,24 +4,16 @@ import fetchHundredCharacters from "../actions/fetchHundredCharacters/index";
 import fetchCharacterDetails from "../actions/fetchCaracterDetails";
 import { ICharacter, ICharacterDetail } from "@/app/interfaces";
 import { FaStar } from "react-icons/fa";
-import Pagination from "../pagination/page";
+import Pagination from "../components/pagination/page";
 import CharacterModal from "../characterDetailModal/characterModal";
-import SearchBar from "../searchBar/page";
+import SearchBar from "../components/searchBar/page";
 import styles from "../cardCharacter/card.module.css";
 import fetchCharacterOrComicByName from "../actions/fetchCharacterOrComicByName";
 import fetchHundredComics from "../actions/fetchHundredComic";
 import { IComicResult } from "../interfaces/Comic";
+import { IHero } from "../interfaces/Character/index";
 import { useRouter } from "next/navigation";
 import fetchComicById from "../actions/fetchComicById";
-
-interface IHero {
-  id: number;
-  name?: string;
-  thumbnail: {
-    path: string;
-    extension: string;
-  };
-}
 
 const CardCharacter: React.FC = () => {
   const router = useRouter();

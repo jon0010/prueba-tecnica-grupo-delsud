@@ -1,7 +1,7 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import Navbar from "../../navbar/page";
-import Footer from "../../footer/page";
+import Navbar from "../../components/navbar/page";
+import Footer from "../../components/footer/page";
 import fetchComicById from "@/app/actions/fetchComicById";
 import { usePathname } from "next/navigation";
 import { IComic } from "@/app/interfaces";

@@ -1,7 +1,7 @@
 "use client";
 import React, { useState, useEffect } from "react";
 import Image from "next/image";
-import delsud from "../assets/delsud.jpg";
+import delsud from "../../assets/delsud.jpg";
 import { BsHandIndexFill } from "react-icons/bs";
 
 const Footer = () => {

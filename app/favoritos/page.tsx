@@ -3,10 +3,10 @@ import React, { useEffect, useState } from "react";
 import { ICharacter, ICharacterDetail } from "../interfaces/index";
 import fetchCaracterDetails from "../actions/fetchCaracterDetails/index";
 import CharacterModal from "../characterDetailModal/characterModal";
-import Navbar from "../navbar/page";
-import Footer from "../footer/page";
+import Navbar from "../components/navbar/page";
+import Footer from "../components/footer/page";
 import { Bangers } from "next/font/google";
-import Pagination from "../pagination/page";
+import Pagination from "../components/pagination/page";
 import styles from "../cardCharacter/card.module.css";
 
 const bangers = Bangers({ subsets: ["latin"], weight: "400" });

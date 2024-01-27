@@ -6,3 +6,12 @@ export interface ICharacter {
     extension: string;
   };
 }
+
+export interface IHero {
+  id: number;
+  name?: string;
+  thumbnail: {
+    path: string;
+    extension: string;
+  };
+}
