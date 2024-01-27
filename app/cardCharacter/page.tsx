@@ -3,7 +3,7 @@ import React, { useState, useEffect } from "react";
 import fetchFiftyCharacters from "../actions/fetchFiftyCharacters/index";
 import fetchCharacterDetails from "../actions/fetchCaracterDetails";
 import { ICharacter, ICharacterDetail } from "@/app/interfaces";
-import { RiStarLine } from "react-icons/ri";
+import { FaStar } from "react-icons/fa";
 import Pagination from "../pagination/page";
 import CharacterModal from "../characterDetailModal/characterModal";
 import SearchBar from "../searchBar/page";
@@ -16,6 +16,9 @@ const CardCharacter: React.FC = () => {
   const [selectedCharacter, setSelectedCharacter] =
     useState<ICharacterDetail | null>(null);
   const [showModal, setShowModal] = useState(false);
+  const [favoriteStates, setFavoriteStates] = useState<{
+    [key: number]: boolean;
+  }>({});
 
   useEffect(() => {
     const fetchData = async () => {
@@ -33,17 +36,22 @@ const CardCharacter: React.FC = () => {
     fetchData();
   }, []);
 
-  console.log({ characters });
+  useEffect(() => {
+    const favorites = JSON.parse(localStorage.getItem("favorites") || "[]");
+    const favoriteStatesCopy: { [key: number]: boolean } = {};
+
+    favorites.forEach((fav: ICharacter) => {
+      favoriteStatesCopy[fav.id] = true;
+    });
+
+    setFavoriteStates(favoriteStatesCopy);
+  }, []);
 
   const indexOfLastCard = currentPage * cardsPerPage;
   const indexOfFirstCard = indexOfLastCard - cardsPerPage;
   const currentCards = characters.slice(indexOfFirstCard, indexOfLastCard);
 
   const paginate = (pageNumber: number) => setCurrentPage(pageNumber);
-
-  const handleConsoleLog = () => {
-    console.log("aaaaaaaaaaaaaaaa");
-  };
 
   const handleCardClick = async (character: ICharacter) => {
     try {
@@ -64,11 +72,43 @@ const CardCharacter: React.FC = () => {
     setSelectedCharacter(null);
   };
 
+  const handleAddFavorites = (character: ICharacter): boolean => {
+    const favorites = JSON.parse(localStorage.getItem("favorites") || "[]");
+
+    const existsInFavorites = favorites.some(
+      (fav: ICharacter) => fav.id === character.id
+    );
+
+    if (!existsInFavorites) {
+      favorites.push(character);
+      localStorage.setItem("favorites", JSON.stringify(favorites));
+      return true;
+    } else {
+      return false;
+    }
+  };
+
+  const handleAddFavoritesAndUpdateIcon = (character: ICharacter) => {
+    const addedToFavorites = handleAddFavorites(character);
+    setFavoriteStates((prevStates) => ({
+      ...prevStates,
+      [character.id]: addedToFavorites,
+    }));
+  };
+
+  const handleIconClick = (
+    event: React.MouseEvent<HTMLDivElement, MouseEvent>,
+    character: ICharacter
+  ) => {
+    event.stopPropagation();
+    handleAddFavoritesAndUpdateIcon(character);
+  };
+
   return (
     <div className="row px-0">
       <div className="col-2 col-sm-0 d-none d-sm-block"></div>
       <div className="col-8 container-fluid p-0">
-      <div className="mt-3">
+        <div className="mt-3">
           <SearchBar />
         </div>
         <div className={`row justify-content-center ${styles["card-row"]}`}>
@@ -88,11 +128,13 @@ const CardCharacter: React.FC = () => {
                   cursor: "pointer",
                 }}
               >
-                <div className="">
-                  <RiStarLine
-                    onClick={() => handleConsoleLog()}
-                    className="fs-2 mt-2 text-white-50"
-                  />
+                <div
+                  className={`fs-2 mt-2 ${styles.starIcon} ${
+                    favoriteStates[character.id] ? styles.favorite : ""
+                  }`}
+                  onClick={(event) => handleIconClick(event, character)}
+                >
+                  <FaStar className={styles.star} />
                 </div>
                 <div className={`card-text ${styles["card-text"]}`}>
                   <p

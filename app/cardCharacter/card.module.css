@@ -83,6 +83,14 @@
   background-color: rgba(127, 255, 212, 0.184);
 }
 
+.starIcon {
+  color: #878484;
+}
+
+.favorite {
+  color: rgb(255, 213, 0);
+}
+
 @keyframes steam {
   0% {
     background-position: 0 0;
