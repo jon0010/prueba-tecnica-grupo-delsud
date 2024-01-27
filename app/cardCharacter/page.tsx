@@ -8,6 +8,7 @@ import Pagination from "../pagination/page";
 import CharacterModal from "../characterDetailModal/characterModal";
 import SearchBar from "../searchBar/page";
 import styles from "../cardCharacter/card.module.css";
+import fetchCharacterOrComicByName from "../actions/fetchCharacterOrComicByName";
 
 const CardCharacter: React.FC = () => {
   const [characters, setCharacters] = useState<ICharacter[]>([]);
@@ -19,6 +20,9 @@ const CardCharacter: React.FC = () => {
   const [favoriteStates, setFavoriteStates] = useState<{
     [key: number]: boolean;
   }>({});
+  const [filteredCharacters, setFilteredCharacters] = useState<ICharacter[]>(
+    []
+  );
 
   useEffect(() => {
     const fetchData = async () => {
@@ -26,6 +30,7 @@ const CardCharacter: React.FC = () => {
         const result = await fetchFiftyCharacters();
         if (result.characters) {
           setCharacters(result.characters);
+          setFilteredCharacters(result.characters);
         } else {
           console.error("Error fetching data:", result.error);
         }
@@ -49,7 +54,10 @@ const CardCharacter: React.FC = () => {
 
   const indexOfLastCard = currentPage * cardsPerPage;
   const indexOfFirstCard = indexOfLastCard - cardsPerPage;
-  const currentCards = characters.slice(indexOfFirstCard, indexOfLastCard);
+  const currentCards = filteredCharacters.slice(
+    indexOfFirstCard,
+    indexOfLastCard
+  );
 
   const paginate = (pageNumber: number) => setCurrentPage(pageNumber);
 
@@ -104,12 +112,34 @@ const CardCharacter: React.FC = () => {
     handleAddFavoritesAndUpdateIcon(character);
   };
 
+  const handleSearchSubmit = async (searchTerm: string) => {
+    try {
+      const apiResults = await fetchCharacterOrComicByName(searchTerm);
+
+      if ("characters" in apiResults) {
+        const filtered = apiResults.characters.filter((character) =>
+          character.name.toLowerCase().startsWith(searchTerm.toLowerCase())
+        );
+        setFilteredCharacters(filtered);
+        setCurrentPage(1);
+      } else {
+        console.error("Error fetching data:", apiResults.error);
+      }
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    }
+  };
+
+  const handleShowAll = () => {
+    setFilteredCharacters(characters);
+  };
+
   return (
     <div className="row px-0">
       <div className="col-2 col-sm-0 d-none d-sm-block"></div>
       <div className="col-8 container-fluid p-0">
         <div className="mt-3">
-          <SearchBar />
+          <SearchBar onSearch={handleSearchSubmit} onShowAll={handleShowAll} />
         </div>
         <div className={`row justify-content-center ${styles["card-row"]}`}>
           {currentCards.map((character, index) => (
@@ -155,7 +185,7 @@ const CardCharacter: React.FC = () => {
         <div className="mt-3">
           <Pagination
             cardsPerPage={cardsPerPage}
-            totalCards={characters.length}
+            totalCards={filteredCharacters.length}
             currentPage={currentPage}
             paginate={paginate}
           />
