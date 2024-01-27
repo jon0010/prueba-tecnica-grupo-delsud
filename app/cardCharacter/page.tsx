@@ -6,7 +6,8 @@ import { ICharacter, ICharacterDetail } from "@/app/interfaces";
 import { RiStarLine } from "react-icons/ri";
 import Pagination from "../pagination/page";
 import CharacterModal from "../characterDetailModal/characterModal";
-import styles from "../cardCharacter/card.module.css"
+import SearchBar from "../searchBar/page";
+import styles from "../cardCharacter/card.module.css";
 
 const CardCharacter: React.FC = () => {
   const [characters, setCharacters] = useState<ICharacter[]>([]);
@@ -67,6 +68,9 @@ const CardCharacter: React.FC = () => {
     <div className="row px-0">
       <div className="col-2 col-sm-0 d-none d-sm-block"></div>
       <div className="col-8 container-fluid p-0">
+      <div className="mt-3">
+          <SearchBar />
+        </div>
         <div className={`row justify-content-center ${styles["card-row"]}`}>
           {currentCards.map((character, index) => (
             <div

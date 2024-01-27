@@ -19,7 +19,7 @@ const CharacterModal: React.FC<CharacterModalProps> = ({
   const router = useRouter();
   return (
     <dialog
-      className="modal fade show"
+      className="modal fade show px-0"
       style={{
         position: "fixed",
         top: "0",
@@ -66,7 +66,7 @@ const CharacterModal: React.FC<CharacterModalProps> = ({
               overflowX: "hidden",
             }}
           >
-            <div className="col-6 text-center mx-auto">
+            <div className="col-12 col-sm-8 text-center mx-auto">
               <p>
                 {characterDetails.description || "Description not available"}
               </p>
@@ -83,22 +83,23 @@ const CharacterModal: React.FC<CharacterModalProps> = ({
                     <div
                       className="row mb-5 border border-4 p-3 me-2 rounded"
                       style={{ cursor: "pointer" }}
-                      onClick={() => router.push(`/characterDetailModal/${comic.id}`)}
+                      onClick={() =>
+                        router.push(`/characterDetailModal/${comic.id}`)
+                      }
                     >
-                      <div className="col-3">
+                      <div className="col-12 col-sm-4">
                         {" "}
                         <Image
-                          className="img-fluid border border-2 border-danger rounded"
+                          className="col-12 col-sm-8 border border-2 border-danger rounded"
                           src={`${comic.thumbnail.path}.${comic.thumbnail.extension}`}
                           alt={comic.title}
-                          height={100}
+                          height={290}
                           width={100}
                         />
                       </div>
-                      <div className="col-8">
-                        {" "}
-                        <li className="mt-5 d-flex justify-content-start">
-                          {comic.title} (ID: {comic.id})
+                      <div className="col-12 col-sm-8 d-flex align-items-center">
+                        <li className="mt-2 d-flex justify-content-start">
+                          {comic.title}
                         </li>
                       </div>
                     </div>

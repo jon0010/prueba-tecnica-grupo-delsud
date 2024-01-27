@@ -42,7 +42,7 @@ const ComicDetail = () => {
       </h1>
       {comicDetails && (
         <div className="row">
-          <div className="col-6 text-center">
+          <div className="col-sm-12 col-md-6 text-center px-5">
             <Image
               className="img-fluid border border-2 border-danger rounded"
               src={`${comicDetails.thumbnail.path}.${comicDetails.thumbnail.extension}`}
@@ -51,7 +51,7 @@ const ComicDetail = () => {
               width={600}
             />
           </div>
-          <div className="col-6">
+          <div className="col-sm-12 col-md-6 px-5">
             <h2 className={`${bangers.className}`}>{comicDetails.title}</h2>
             <p>
               Comments:{" "}
