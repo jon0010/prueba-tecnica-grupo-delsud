@@ -1,3 +1,4 @@
+"use client";
 import React, { useState, ChangeEvent, FormEvent } from "react";
 import { ISearchBarProps } from "../../interfaces";
 
