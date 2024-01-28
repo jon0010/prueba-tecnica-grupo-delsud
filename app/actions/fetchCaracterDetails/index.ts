@@ -1,5 +1,5 @@
 import axios from "axios";
-import { MARVEL_BASE_URL, MARVEL_PUBLIC_KEY, TS, HASH } from "@/env";
+import { MARVEL_BASE_URL, MARVEL_PUBLIC_KEY, TS, HASH } from "../../../env";
 import { ICharacterDetail } from "../../interfaces/index";
 import { IComicDetail } from "@/app/interfaces/CharacterDetail";
 
