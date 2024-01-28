@@ -3,10 +3,12 @@ import React, { useState, useEffect } from "react";
 import Image from "next/image";
 import delsud from "../../assets/delsud.jpg";
 import { BsHandIndexFill } from "react-icons/bs";
+import { useStyles } from "../../setDarkMode";
 
 const Footer = () => {
   const currentYear = new Date().getFullYear();
   const [showButton, setShowButton] = useState(false);
+  const { darkMode } = useStyles();
 
   const handleScrollToTop = () => {
     window.scrollTo({ top: 0, behavior: "smooth" });
@@ -27,16 +29,16 @@ const Footer = () => {
 
   return (
     <div
-      className="d-flex align-items-center justify-content-between col-11 col-md-8 mx-auto mb-5 py-4"
+      className={`d-flex align-items-center justify-content-between col-11 col-md-8 mx-auto py-5 ${
+        darkMode ? "bg-dark" : "bg-light"
+      } m-0`}
       style={{
-        border: "solid #000000",
-        borderRadius: "12px",
-        padding: "12px",
-        backgroundColor: "#E3E2E2",
-        marginTop: "4em",
+        padding: "35px",
+        marginTop: "5em",
+        width: "100%",
       }}
     >
-      <div>
+      <div className={`${darkMode ? "text-white" : "text-dark"}`}>
         <Image
           src={delsud}
           alt="Copyright Logo"
@@ -50,7 +52,9 @@ const Footer = () => {
       {showButton && (
         <button
           onClick={handleScrollToTop}
-          className="btn btn-dark"
+          className={`btn ${
+            darkMode ? "border border-white" : "border border-dark"
+          } ${darkMode ? "text-white" : "text-dark"} me-2`}
           style={{ fontSize: "16px" }}
         >
           Subir <BsHandIndexFill />

@@ -14,6 +14,7 @@ import { IComicResult } from "../interfaces/Comic";
 import { IHero } from "../interfaces/Character/index";
 import { useRouter } from "next/navigation";
 import fetchComicById from "../actions/fetchComicById";
+import { useStyles } from "../setDarkMode";
 
 const CardCharacter: React.FC = () => {
   const router = useRouter();
@@ -31,6 +32,7 @@ const CardCharacter: React.FC = () => {
     IHero[] | IComicResult[]
   >([]);
   const [showingHeroes, setShowingHeroes] = useState(true);
+  const { darkMode } = useStyles();
 
   useEffect(() => {
     const fetchHeroes = async () => {
@@ -227,7 +229,7 @@ const CardCharacter: React.FC = () => {
   };
 
   return (
-    <div className="row px-0">
+    <div className={`row px-0 ${darkMode ? "bg-dark" : "bg-light"}`}>
       <div className="col-2 col-sm-0 d-none d-sm-block"></div>
       <div className="col-8 container-fluid p-0">
         <div className="mt-3">

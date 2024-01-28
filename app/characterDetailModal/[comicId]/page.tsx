@@ -9,6 +9,7 @@ import Image from "next/image";
 import { Bangers } from "next/font/google";
 import styles from "../../cardCharacter/card.module.css";
 import { formatDate, capitalizeFirstLetter } from "../../utils/formatDate";
+import { useStyles } from "../../setDarkMode";
 
 const bangers = Bangers({ subsets: ["latin"], weight: "400" });
 
@@ -16,6 +17,7 @@ const ComicDetail = () => {
   const pathname = usePathname();
   const comicId = pathname.split("/").pop() || "";
   const [comicDetails, setComicDetails] = useState<IComic | null>(null);
+  const { darkMode } = useStyles();
 
   useEffect(() => {
     const fetchData = async () => {
@@ -32,15 +34,20 @@ const ComicDetail = () => {
   }, [comicId]);
 
   return (
-    <div>
+    <div className={` ${darkMode ? "bg-dark" : "bg-light"}`}>
       <Navbar />
       <h1
         className={`modal-title ${bangers.className} ${styles["titleComicDetail"]}  text-warning mb-4 text-center mt-2`}
+        style={{
+          textShadow: darkMode
+            ? "3px 2px 2px rgba(255, 255, 255, 1)"
+            : "3px 2px 2px rgba(0, 0, 0, 1)",
+        }}
       >
         comic book info
       </h1>
       {comicDetails && (
-        <div className="row">
+        <div className={`row  ${darkMode ? "text-white" : "text-dark"}`}>
           <div className="col-sm-12 col-md-6 text-center px-5">
             <Image
               className="img-fluid border border-2 border-danger rounded"

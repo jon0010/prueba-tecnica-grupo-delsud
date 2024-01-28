@@ -8,6 +8,7 @@ import Footer from "../components/footer/page";
 import { Bangers } from "next/font/google";
 import Pagination from "../components/pagination/page";
 import styles from "../cardCharacter/card.module.css";
+import { useStyles } from "../setDarkMode";
 
 const bangers = Bangers({ subsets: ["latin"], weight: "400" });
 
@@ -18,6 +19,7 @@ const Favoritos = () => {
   const [showModal, setShowModal] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
   const cardsPerPage = 8;
+  const { darkMode } = useStyles();
 
   useEffect(() => {
     const storedFavorites = JSON.parse(
@@ -52,16 +54,24 @@ const Favoritos = () => {
   const paginate = (pageNumber: number) => setCurrentPage(pageNumber);
 
   return (
-    <div className="row px-0">
+    <div
+      className={`row px-0 ${darkMode ? "bg-dark" : "bg-light"}`}
+      style={{ height: "100%" }}
+    >
       <Navbar />
       <div className="col-2 col-sm-0 d-none d-sm-block"></div>
       <div className="col-8 container-fluid p-0">
         <h1
-          className={`modal-title ${bangers.className} ${styles["titleDetail"]} text-warning text-center`}
+          className={`modal-title ${bangers.className} ${styles["titleDetail"]} text-warning text-center my-5`}
+          style={{
+            textShadow: darkMode
+              ? "3px 2px 2px rgba(255, 255, 255, 1)"
+              : "3px 2px 2px rgba(0, 0, 0, 1)",
+          }}
         >
           favorites
         </h1>
-        <div className="mt-3">
+        <div className="mb-4">
           <Pagination
             cardsPerPage={cardsPerPage}
             totalCards={favorites.length}
