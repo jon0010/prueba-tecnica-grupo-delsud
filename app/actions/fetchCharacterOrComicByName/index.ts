@@ -15,14 +15,15 @@ const fetchCharacterOrComicByName = async (
   | { error: string }
 > => {
   try {
-    const marvelBaseUrl = process.env.MARVEL_BASE_URL;
-    const marvelPublicKey = process.env.MARVEL_PUBLIC_KEY;
-    const hash = process.env.HASH;
-    const ts = process.env.TS;
+    const marvelBaseUrl = process.env.NEXT_PUBLIC_MARVEL_BASE_URL;
+    const marvelPublicKey = process.env.NEXT_PUBLIC_MARVEL_PUBLIC_KEY;
+    const hash = process.env.NEXT_PUBLIC_HASH;
+    const ts = process.env.NEXT_PUBLIC_TS;
     let results;
 
     if (showingHeroes) {
       const charactersResponse = await axios.get(
+        // @ts-ignore
         `${marvelBaseUrl.trim()}/characters?apikey=${marvelPublicKey.trim()}&hash=${hash.trim()}&ts=${ts.trim()}&limit=100`
       );
 
@@ -40,6 +41,7 @@ const fetchCharacterOrComicByName = async (
         }));
     } else {
       const comicsResponse = await axios.get(
+        // @ts-ignore
         `${marvelBaseUrl.trim()}/comics?apikey=${marvelPublicKey.trim()}&hash=${hash.trim()}&ts=${ts.trim()}&limit=100`
       );
 

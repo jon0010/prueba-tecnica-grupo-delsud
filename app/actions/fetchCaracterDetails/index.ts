@@ -7,12 +7,13 @@ import { IComicDetail } from "@/app/interfaces/CharacterDetail";
 const fetchCharacterDetails = async (
   characterId: string
 ): Promise<ICharacterDetail> => {
-  const marvelBaseUrl = process.env.MARVEL_BASE_URL;
-  const marvelPublicKey = process.env.MARVEL_PUBLIC_KEY;
-  const hash = process.env.HASH;
-  const ts = process.env.TS;
+  const marvelBaseUrl = process.env.NEXT_PUBLIC_MARVEL_BASE_URL;
+  const marvelPublicKey = process.env.NEXT_PUBLIC_MARVEL_PUBLIC_KEY;
+  const hash = process.env.NEXT_PUBLIC_HASH;
+  const ts = process.env.NEXT_PUBLIC_TS;
   try {
     const characterResponse = await axios.get(
+      // @ts-ignore
       `${marvelBaseUrl}/characters/${characterId}?apikey=${marvelPublicKey}&hash=${hash}&ts=${ts}`
     );
 
@@ -20,6 +21,7 @@ const fetchCharacterDetails = async (
 
     if (character) {
       const comicsResponse = await axios.get(
+        // @ts-ignore
         `${marvelBaseUrl}/characters/${characterId}/comics?apikey=${marvelPublicKey}&hash=${hash}&ts=${ts}`
       );
 
