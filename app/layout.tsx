@@ -2,6 +2,11 @@ import type { Metadata } from "next";
 import { Montserrat } from "next/font/google";
 import "./globals.css";
 import "bootstrap/dist/css/bootstrap.min.css";
+import { StylesProvider } from "./setDarkMode";
+
+export interface PageProps {
+  pageProps: string;
+}
 
 const montserrat = Montserrat({ subsets: ["latin"], weight: "300" });
 
@@ -18,7 +23,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${montserrat.className} antialised fw-semibold`}>
-        {children}
+        <StylesProvider>{children}</StylesProvider>
       </body>
     </html>
   );

@@ -4,6 +4,7 @@ import { ICharacterDetail } from "../interfaces/index";
 import { Bangers } from "next/font/google";
 import styles from "../cardCharacter/card.module.css";
 import { useRouter } from "next/navigation";
+import { useStyles } from "../setDarkMode";
 
 interface CharacterModalProps {
   characterDetails: ICharacterDetail;
@@ -17,6 +18,8 @@ const CharacterModal: React.FC<CharacterModalProps> = ({
   onClose,
 }) => {
   const router = useRouter();
+  const { darkMode } = useStyles();
+
   return (
     <dialog
       className="modal fade show px-0"
@@ -39,11 +42,25 @@ const CharacterModal: React.FC<CharacterModalProps> = ({
       aria-labelledby="characterModal"
       aria-hidden="true"
     >
-      <div className="modal-dialog" role="document" style={{ maxWidth: "80%" }}>
-        <div className="modal-content" style={{ overflow: "hidden" }}>
+      <div
+        className="modal-dialog "
+        role="document"
+        style={{ maxWidth: "80%" }}
+      >
+        <div
+          className={`modal-content ${darkMode ? "bg-dark" : "bg-light"} ${
+            darkMode ? "text-white" : "text-dark"
+          }`}
+          style={{ overflow: "hidden" }}
+        >
           <div className="modal-header">
             <h5
               className={`modal-title ${bangers.className} ${styles["titleDetail"]} fs-1 text-warning`}
+              style={{
+                textShadow: darkMode
+                  ? "3px 2px 2px rgba(255, 255, 255, 1)"
+                  : "3px 2px 2px rgba(0, 0, 0, 1)",
+              }}
               id="characterModal"
             >
               {characterDetails.name}
@@ -73,6 +90,11 @@ const CharacterModal: React.FC<CharacterModalProps> = ({
             </div>
             <h5
               className={`modal-title ${bangers.className} ${styles["titleDetail"]} fs-1 text-warning mb-4`}
+              style={{
+                textShadow: darkMode
+                  ? "3px 2px 2px rgba(255, 255, 255, 1)"
+                  : "3px 2px 2px rgba(0, 0, 0, 1)",
+              }}
             >
               Comic Book Appearances
             </h5>
