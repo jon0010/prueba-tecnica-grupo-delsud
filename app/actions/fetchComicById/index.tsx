@@ -1,10 +1,15 @@
 import axios from "axios";
-import { MARVEL_BASE_URL, MARVEL_PUBLIC_KEY, TS, HASH } from "../../../env";
+import * as dotenv from "dotenv";
+dotenv.config();
 
 const fetchComicById = async (comicId: number) => {
+  const marvelBaseUrl = process.env.MARVEL_BASE_URL;
+  const marvelPublicKey = process.env.MARVEL_PUBLIC_KEY;
+  const hash = process.env.HASH;
+  const ts = process.env.TS;
   try {
     const response = await axios.get(
-      `${MARVEL_BASE_URL.trim()}/comics/${comicId}?apikey=${MARVEL_PUBLIC_KEY.trim()}&hash=${HASH.trim()}&ts=${TS.trim()}`
+      `${marvelBaseUrl.trim()}/comics/${comicId}?apikey=${marvelPublicKey.trim()}&hash=${hash.trim()}&ts=${ts.trim()}`
     );
     const comic = response.data.data.results[0];
 

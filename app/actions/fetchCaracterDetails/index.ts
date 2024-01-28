@@ -1,21 +1,26 @@
 import axios from "axios";
-import { MARVEL_BASE_URL, MARVEL_PUBLIC_KEY, TS, HASH } from "../../../env";
+import * as dotenv from "dotenv";
+dotenv.config();
 import { ICharacterDetail } from "../../interfaces/index";
 import { IComicDetail } from "@/app/interfaces/CharacterDetail";
 
 const fetchCharacterDetails = async (
   characterId: string
 ): Promise<ICharacterDetail> => {
+  const marvelBaseUrl = process.env.MARVEL_BASE_URL;
+  const marvelPublicKey = process.env.MARVEL_PUBLIC_KEY;
+  const hash = process.env.HASH;
+  const ts = process.env.TS;
   try {
     const characterResponse = await axios.get(
-      `${MARVEL_BASE_URL}/characters/${characterId}?apikey=${MARVEL_PUBLIC_KEY}&hash=${HASH}&ts=${TS}`
+      `${marvelBaseUrl}/characters/${characterId}?apikey=${marvelPublicKey}&hash=${hash}&ts=${ts}`
     );
 
     const character = characterResponse.data.data.results[0];
 
     if (character) {
       const comicsResponse = await axios.get(
-        `${MARVEL_BASE_URL}/characters/${characterId}/comics?apikey=${MARVEL_PUBLIC_KEY}&hash=${HASH}&ts=${TS}`
+        `${marvelBaseUrl}/characters/${characterId}/comics?apikey=${marvelPublicKey}&hash=${hash}&ts=${ts}`
       );
 
       const comicsDetails = comicsResponse.data.data.results.map(

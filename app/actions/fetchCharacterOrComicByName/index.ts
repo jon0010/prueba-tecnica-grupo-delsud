@@ -1,7 +1,8 @@
 import axios from "axios";
-import { MARVEL_BASE_URL, MARVEL_PUBLIC_KEY, TS, HASH } from "../../../env";
 import { ICharacter, ISearchResult } from "@/app/interfaces/index";
 import { IComicResult } from "@/app/interfaces/Comic";
+import * as dotenv from "dotenv";
+dotenv.config();
 
 const fetchCharacterOrComicByName = async (
   searchTerm: string,
@@ -14,11 +15,15 @@ const fetchCharacterOrComicByName = async (
   | { error: string }
 > => {
   try {
+    const marvelBaseUrl = process.env.MARVEL_BASE_URL;
+    const marvelPublicKey = process.env.MARVEL_PUBLIC_KEY;
+    const hash = process.env.HASH;
+    const ts = process.env.TS;
     let results;
 
     if (showingHeroes) {
       const charactersResponse = await axios.get(
-        `${MARVEL_BASE_URL.trim()}/characters?apikey=${MARVEL_PUBLIC_KEY.trim()}&hash=${HASH.trim()}&ts=${TS.trim()}&limit=100`
+        `${marvelBaseUrl.trim()}/characters?apikey=${marvelPublicKey.trim()}&hash=${hash.trim()}&ts=${ts.trim()}&limit=100`
       );
 
       const characters: ICharacter[] = charactersResponse.data.data.results;
@@ -35,7 +40,7 @@ const fetchCharacterOrComicByName = async (
         }));
     } else {
       const comicsResponse = await axios.get(
-        `${MARVEL_BASE_URL.trim()}/comics?apikey=${MARVEL_PUBLIC_KEY.trim()}&hash=${HASH.trim()}&ts=${TS.trim()}&limit=100`
+        `${marvelBaseUrl.trim()}/comics?apikey=${marvelPublicKey.trim()}&hash=${hash.trim()}&ts=${ts.trim()}&limit=100`
       );
 
       const comics: IComicResult[] = comicsResponse.data.data.results;
