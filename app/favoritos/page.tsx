@@ -10,6 +10,7 @@ import Pagination from "../components/pagination/page";
 import styles from "../cardCharacter/card.module.css";
 import { useStyles } from "../setDarkMode";
 import Loader from "../loader";
+import Image from "next/image";
 
 const bangers = Bangers({ subsets: ["latin"], weight: "400" });
 
@@ -84,51 +85,69 @@ const Favoritos = () => {
           >
             favorites
           </h1>
-          <div className="mb-4">
-            <Pagination
-              cardsPerPage={cardsPerPage}
-              totalCards={favorites.length}
-              currentPage={currentPage}
-              paginate={paginate}
-            />
-          </div>
-          <div className={`row justify-content-center ${styles["card-row"]}`}>
-            {favorites.map((character, index) => {
-              const lowercaseName = character.name.toLowerCase();
-              const isComic = lowercaseName.includes("comic");
-              return !isComic ? (
-                <div
-                  key={index}
-                  className={`col-12 col-sm-6 col-md-3 col-lg-3 ${styles["card-wrapper"]} ${styles["custom-breakpoint-class"]}`}
-                  style={{ cursor: "pointer" }}
-                  onClick={() => handleCardClick(character)}
-                >
-                  <div
-                    className={`card mt-4 d-flex flex-row-reverse flex-wrap align-content-start justify-content-start align-items-center ${styles.card} ${styles["custom-animation-class"]}`}
-                    style={{
-                      backgroundImage: `url('${character.thumbnail.path}.${character.thumbnail.extension}')`,
-                      backgroundRepeat: "no-repeat",
-                      backgroundSize: "cover",
-                      cursor: "pointer",
-                    }}
-                  >
-                    <div className={`card-text ${styles["card-text"]}`}>
-                      <p
-                        className="d-flex justify-content-start ms-2"
-                        style={{ textShadow: "2px 2px 2px rgba(0, 0, 0, 1)" }}
+          {favorites.length === 0 ? (
+            <div className="text-center">
+              <Image
+                className="img-fluid p-4 me-2 border border-2 border-danger rounded-4"
+                width={450}
+                height={500}
+                src="https://res.cloudinary.com/dkpotpaaf/image/upload/v1706500492/hhkxnqtqkbwrnvsclwus.png"
+                alt="logo loader"
+              />
+            </div>
+          ) : (
+            <>
+              <div className="mb-4">
+                <Pagination
+                  cardsPerPage={cardsPerPage}
+                  totalCards={favorites.length}
+                  currentPage={currentPage}
+                  paginate={paginate}
+                />
+              </div>
+              <div
+                className={`row justify-content-center ${styles["card-row"]}`}
+              >
+                {favorites.map((character, index) => {
+                  const lowercaseName = character.name.toLowerCase();
+                  const isComic = lowercaseName.includes("comic");
+                  return !isComic ? (
+                    <div
+                      key={index}
+                      className={`col-12 col-sm-6 col-md-3 col-lg-3 ${styles["card-wrapper"]} ${styles["custom-breakpoint-class"]}`}
+                      style={{ cursor: "pointer" }}
+                      onClick={() => handleCardClick(character)}
+                    >
+                      <div
+                        className={`card mt-4 d-flex flex-row-reverse flex-wrap align-content-start justify-content-start align-items-center ${styles.card} ${styles["custom-animation-class"]}`}
+                        style={{
+                          backgroundImage: `url('${character.thumbnail.path}.${character.thumbnail.extension}')`,
+                          backgroundRepeat: "no-repeat",
+                          backgroundSize: "cover",
+                          cursor: "pointer",
+                        }}
                       >
-                        {character.name}
-                      </p>
+                        <div className={`card-text ${styles["card-text"]}`}>
+                          <p
+                            className="d-flex justify-content-start ms-2"
+                            style={{
+                              textShadow: "2px 2px 2px rgba(0, 0, 0, 1)",
+                            }}
+                          >
+                            {character.name}
+                          </p>
+                        </div>
+                        <span className="top spanCard"></span>
+                        <span className="right spanCard"></span>
+                        <span className="bottom spanCard"></span>
+                        <span className="left spanCard"></span>
+                      </div>
                     </div>
-                    <span className="top spanCard"></span>
-                    <span className="right spanCard"></span>
-                    <span className="bottom spanCard"></span>
-                    <span className="left spanCard"></span>
-                  </div>
-                </div>
-              ) : null;
-            })}
-          </div>
+                  ) : null;
+                })}
+              </div>
+            </>
+          )}
         </div>
         <div className="col-2 col-sm-0 d-none d-sm-block"></div>
         {showModal && selectedCharacter && (
